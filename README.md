@@ -13,7 +13,7 @@
 
  ## Running
 
-1. Open your [cmd](%windir%\system32\cmd.exe)
+1. Open your cmd
 2. Run the server by:
 ```cmd
 C:\Your manage.py path directory
