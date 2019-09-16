@@ -13,8 +13,11 @@
 
  ## Running
 
-1. Open your cmd
-2. Run the server by:
+1. Clone this repository to your directory by (Terminal):
+```cmd
+> git clone https://github.com/bleachjade/django-polls.git
+```
+2. Run the server by (Terminal):
 ```cmd
 C:\Your manage.py path directory
 > python manage.py runserver
@@ -30,7 +33,7 @@ Django version 2.2.5, using settings 'mysite.settings'
 Starting development server at http://127.0.0.1:8000/
 Quit the server with CTRL-BREAK.
 ```
-4. Open your browser and start typing something like:
+4. Open your browser and start typing something like this in your search tools box:
 ```bash
 localhost:8000/admin or
 
