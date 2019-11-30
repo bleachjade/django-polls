@@ -1,4 +1,5 @@
 import datetime
+import time
 from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -6,6 +7,10 @@ from polls.models import Question,Choice
 from django.utils import timezone
 from django.contrib.auth.models import User
 from seleniumlogin import force_login
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver import ActionChains
 
 def create_question(question_text, days):
     """
@@ -51,6 +56,7 @@ class SeleniumTestCase(LiveServerTestCase):
         selenium.get(self.live_server_url + '/polls/')
         links = selenium.find_elements_by_tag_name('a')
         links[1].click()
+        print(links)
         self.assertEqual(self.selenium.current_url, self.live_server_url + '/polls/' + f"{question.id}/")
 
     def test_force_login(self):
@@ -70,9 +76,16 @@ class SeleniumTestCase(LiveServerTestCase):
         selenium.find_element_by_id("id_username").send_keys(username)
         selenium.find_element_by_id("id_password").send_keys(password)
         selenium.find_element_by_id("submit").click()
-        link = selenium.find_element_by_tag_name('a')
-        link.click()
-        choice1 = selenium.find_element_by_id(f"choice{choice.id}")
+        # link = selenium.find_element_by_tag_name('a')
+        # print(link)
+        # link.click()
+        # time.sleep(5)
+        wait = WebDriverWait(selenium, 10)
+        accept = wait.until(EC.element_to_be_clickable((By.TAG_NAME, "a")))
+
+        actions = ActionChains(selenium)
+        actions.move_to_element(accept).click().perform()
+        choice1 = selenium.find_element_by_id(f"choice{ choice.id }")
         choice1.click()
-        selenium.find_element_by_id(f"submit_vote").click()
-        self.assertEqual(self.selenium.current_url, self.live_server_url + '/polls/' + f"{question.id}/results/")
+        selenium.find_element_by_id("submit_vote").click()
+        self.assertEqual(self.selenium.current_url, self.live_server_url + '/polls/' + f"{question.id}/")
