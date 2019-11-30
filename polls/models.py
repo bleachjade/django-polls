@@ -21,3 +21,12 @@ class Choice(models.Model):
 
     def __str__(self):
         return self.choice_text
+
+class Product(models.Model):
+    upccode = models.CharField('UPC code',max_length=14)
+    description = models.CharField('Description', max_length=60)
+    price = models.DecimalField("Unit Price", 
+            max_digits=9, decimal_places=2)
+
+    def quantity_in_stock(self):
+        """Compute and return number of units in stock"""

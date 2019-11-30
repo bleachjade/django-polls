@@ -1,0 +1,20 @@
+li a {
+    color:whitesmoke;
+}
+a {
+    color: whitesmoke;
+}
+
+body {
+    color: white;
+    background: white url(images/background.jpg) no-repeat;
+}
+
+table th tr {
+    border: 2px solid whitesmoke;
+    border-collapse: collapse;
+    text-align: left;
+    background-color: aqua;
+    color: aliceblue;
+    padding: 4px 4px 8px;
+}

@@ -1,12 +1,28 @@
+{% extends 'polls/base.html' %}
+
+{% block main_content %}
+
 <h1>{{ question.question_text }}</h1>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
+{% if user.is_authenticated %}
 <form action="{% url 'polls:vote' question.id %}" method="post">
-{% csrf_token %}
-{% for choice in question.choice_set.all %}
-    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
-{% endfor %}
-<input type="submit" value="Vote">
-</form>
+    {% else %}
+    <form>
+        {% endif %}
+        {% csrf_token %}
+        {% for choice in question.choice_set.all %}
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+        {% endfor %}
+        {% if user.is_authenticated %}
+        <input type="submit" value="Vote" id="submit_vote">
+        {% else %}
+        <br>
+        Please <a value"login" href="{% url 'login' %}?next={{ request.path }}">login</a> to vote
+        {% endif %}
+    </form>
+    <a href="{% url 'polls:results' question.id %}">See result</a>
+    <br>
+    <a href="{% url 'polls:index' %}">
+        <-- Back to question list</a> {% endblock %}
